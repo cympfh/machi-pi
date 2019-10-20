@@ -1,0 +1,2 @@
+do:
+	bash download.sh
