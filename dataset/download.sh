@@ -62,7 +62,7 @@ curl -sL https://tenhou.net/sc/raw/list.cgi | grep -o 'scc.*.html.gz' |
     while read f; do
         echo $f >&2
         echo "# $f"
-        curl -sL https://tenhou.net/sc/raw/dat/scc2019102117.html.gz | gunzip -d |
+        curl -sL https://tenhou.net/sc/raw/dat/$f | gunzip -d |
             grep -o '201[0-9a-z\-]*' |
             while read gid; do
                 echo $gid >&2
