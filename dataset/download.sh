@@ -63,10 +63,12 @@ curl -sL https://tenhou.net/sc/raw/list.cgi | grep -o 'scc.*.html.gz' |
         echo $f >&2
         echo "# $f"
         curl -sL https://tenhou.net/sc/raw/dat/$f | gunzip -d |
-            grep -o '201[0-9a-z\-]*' |
-            while read gid; do
-                echo $gid >&2
-                echo "## $gid"
-                dataset-from-game-id $gid | sed 's/  /\t/g'
+            sed 's/ | /\n/g' | awk 'NR%5 == 3 || NR%5 == 4' |
+            while read GAME_TYPE; do
+                read URL
+                GID=$( echo $URL | grep -o '201[0-9a-z\-]*' | head -1 )
+                echo $GID >&2
+                echo "## $GID"
+                dataset-from-game-id $GID | sed 's/  /\t/g' | sed "s/^/$GAME_TYPE	/g"
             done
     done
