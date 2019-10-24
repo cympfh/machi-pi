@@ -1,9 +1,10 @@
 #!/bin/bash
 
-FASTCNN=$HOME/git/fastcnn/bin/fastcnn
+export PATH=$HOME/git/fastcnn/bin/fastcnn:$PATH
+FASTCNN=${FASTCNN:-fastcnn}
 ls out.h5 out.meta.yml
 
-# $FASTCNN predict-prob out txt/test -k 5 > /tmp/vis.tmp
+$FASTCNN predict-prob out txt/test -k 5 > /tmp/vis.tmp
 paste /tmp/vis.tmp txt/test | ruby -ne '
     def id2tile(id)
         if id < 9 * 3

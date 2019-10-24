@@ -1,7 +1,8 @@
 #!/bin/bash
 
 mkdir -p txt
-FASTCNN=$HOME/git/fastcnn/bin/fastcnn
+export PATH=$HOME/git/fastcnn/bin/fastcnn:$PATH
+FASTCNN=${FASTCNN:-fastcnn}
 
 id2chr() {
     grep -v ' $' |
@@ -24,7 +25,7 @@ report() {
 cat ../dataset/txt/train | id2chr >txt/train
 cat ../dataset/txt/valid | id2chr >txt/valid
 cat ../dataset/txt/test | id2chr >txt/test
-$FASTCNN supervised txt/train --validate txt/valid --verbose --stat -e 50 --lr 0.3 --kernel-size 5
+$FASTCNN supervised txt/train --validate txt/valid --verbose --stat -e 10 --lr 0.4
 
 report | tee out.report.log
-cat out.report.log | tw -
+cat out.report.log
